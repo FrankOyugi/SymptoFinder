@@ -23,10 +23,20 @@ diseases_list = {15: 'Fungal infection', 4: 'Allergy', 16: 'GERD', 9: 'Chronic c
 
 # Function to get the predicted disease
 def get_predicted_disease_value(patient_symptoms):
+    # Check if all input symptoms are valid
+    invalid_symptoms = [
+        symptom for symptom in patient_symptoms if symptom not in symptoms_dict]
+
+    if invalid_symptoms:
+        # Return an error message if there are invalid symptoms
+        return f"Error: The following symptoms are not recognized: {', '.join(invalid_symptoms)}"
+
+    # Proceed with prediction if all symptoms are valid
     input_vector = np.zeros(len(symptoms_dict))
     for item in patient_symptoms:
         input_vector[symptoms_dict[item]] = 1
     return diseases_list[svc.predict([input_vector])[0]]
+
 
 # Function to get disease details
 
@@ -45,6 +55,7 @@ def health_assist(dis):
 
 
 # Streamlit App Layout
+# Streamlit App Layout
 st.title("SymptoFinder - Disease Prediction System")
 st.write("Enter symptoms separated by commas to get a disease prediction along with details.")
 
@@ -54,21 +65,27 @@ if st.button("Predict"):
     if symptoms:
         user_symptoms = [sym.strip() for sym in symptoms.split(',')]
         predicted_disease = get_predicted_disease_value(user_symptoms)
-        disease_description, precautions_to_take, medications = health_assist(
-            predicted_disease)
 
-        st.subheader(f"Predicted Disease: {predicted_disease}")
-        st.write(f"Description: {disease_description}")
-        st.write("Precautions:")
-        for precaution in precautions_to_take[0]:
-            st.write(f"- {precaution}")
+        # Check if the result is an error message
+        if isinstance(predicted_disease, str) and predicted_disease.startswith("Error"):
+            st.error(predicted_disease)
+        else:
+            disease_description, precautions_to_take, medications = health_assist(
+                predicted_disease)
 
-        st.write("Medications:")
-        medications_text = "\n".join(
-            [f"- {med.strip()}" for med in medications])
-        st.markdown(medications_text)
+            st.subheader(f"Predicted Disease: {predicted_disease}")
+            st.write(f"Description: {disease_description}")
+            st.write("Precautions:")
+            for precaution in precautions_to_take[0]:
+                st.write(f"- {precaution}")
+
+            st.write("Medications:")
+            medications_text = "\n".join(
+                [f"- {med.strip()}" for med in medications])
+            st.markdown(medications_text)
     else:
         st.error("Please enter symptoms.")
+
 
 st.sidebar.title("About")
 st.sidebar.info(
