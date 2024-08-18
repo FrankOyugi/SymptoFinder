@@ -65,9 +65,9 @@ if st.button("Predict"):
 
         st.write("Medications:")
         for medication in medications:
-            st.write(f"- {medication}")
-    else:
-        st.error("Please enter symptoms.")
+            st.write(f"- {medication.strip()}")
+        else:
+            st.error("Please enter symptoms.")
 
 st.sidebar.title("About")
 st.sidebar.info(
