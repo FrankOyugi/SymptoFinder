@@ -64,8 +64,9 @@ if st.button("Predict"):
             st.write(f"- {precaution}")
 
         st.write("Medications:")
-        for medication in medications:
-            st.write(f"- {medication}")
+        medications_text = "\n".join(
+            [f"- {med.strip()}" for med in medications])
+        st.markdown(medications_text)
     else:
         st.error("Please enter symptoms.")
 
