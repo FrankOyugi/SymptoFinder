@@ -72,7 +72,7 @@ if st.button("Predict"):
 
 st.sidebar.title("About")
 st.sidebar.info(
-    "This is a disease prediction system built using machine learning.")
+    "Welcome to SymptoFinder, your reliable health assistant for understanding and managing common medical conditions. SymptoFinder is designed to help users quickly identify potential illnesses based on their symptoms and receive personalized recommendations for care.SymptoFinder utilizes advanced machine learning algorithms to analyze the symptoms you input and match them with a comprehensive database of known medical conditions. Our system then provides a list of potential conditions along with detailed descriptions, precautions, and suggested treatments.")
 
 st.sidebar.title("Contact")
-st.sidebar.info("For inquiries, please contact us.")
+st.sidebar.info("Send us an email at mailto:support@symptofinder.com")
