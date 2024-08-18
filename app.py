@@ -65,7 +65,7 @@ if st.button("Predict"):
 
         st.write("Medications:")
         for medication in medications:
-            st.write(f"- {medication[0]}")
+            st.write(f"- {medication}")
     else:
         st.error("Please enter symptoms.")
 
