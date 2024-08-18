@@ -29,14 +29,20 @@ def get_predicted_disease_value(patient_symptoms):
     return diseases_list[svc.predict([input_vector])[0]]
 
 # Function to get disease details
+
+
 def health_assist(dis):
-    disease_description = descriptions_df[descriptions_df['Disease'] == dis]['Description']
+    disease_description = descriptions_df[descriptions_df['Disease']
+                                          == dis]['Description']
     disease_description = " ".join([w for w in disease_description])
-    precautions_to_take = precautions_df[precautions_df['Disease'] == dis][['Precaution_1', 'Precaution_2', 'Precaution_3', 'Precaution_4']]
+    precautions_to_take = precautions_df[precautions_df['Disease'] == dis][[
+        'Precaution_1', 'Precaution_2', 'Precaution_3', 'Precaution_4']]
     precautions_to_take = [col for col in precautions_to_take.values]
-    medications = medications_df[medications_df['Disease'] == dis]['Medication']
+    medications = medications_df[medications_df['Disease']
+                                 == dis]['Medication']
     medications = [medications for medications in medications.values]
     return disease_description, precautions_to_take, medications
+
 
 # Streamlit App Layout
 st.title("SymptoFinder - Disease Prediction System")
@@ -48,7 +54,8 @@ if st.button("Predict"):
     if symptoms:
         user_symptoms = [sym.strip() for sym in symptoms.split(',')]
         predicted_disease = get_predicted_disease_value(user_symptoms)
-        disease_description, precautions_to_take, medications = health_assist(predicted_disease)
+        disease_description, precautions_to_take, medications = health_assist(
+            predicted_disease)
 
         st.subheader(f"Predicted Disease: {predicted_disease}")
         st.write(f"Description: {disease_description}")
@@ -63,7 +70,8 @@ if st.button("Predict"):
         st.error("Please enter symptoms.")
 
 st.sidebar.title("About")
-st.sidebar.info("This is a disease prediction system built using machine learning.")
+st.sidebar.info(
+    "This is a disease prediction system built using machine learning.")
 
 st.sidebar.title("Contact")
 st.sidebar.info("For inquiries, please contact us.")
